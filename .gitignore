@@ -36,3 +36,7 @@ vendor/
 .nfs*
 
 # End of https://www.gitignore.io/api/go,linux
+
+credentials.json
+secret.txt
+device_id.txt
