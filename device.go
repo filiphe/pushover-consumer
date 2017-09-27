@@ -9,17 +9,17 @@ import (
 	"net/url"
 )
 
-type Device struct {
+type DeviceResp struct {
 	ID      string `json:"id"`
 	Status  int    `json:"status"`
 	Request string `json:"request"`
 }
 
-func (d Device) String() string {
+func (d DeviceResp) String() string {
 	return fmt.Sprintf("id: %s\nstatus: %d\nrequest: %s\n", d.ID, d.Status, d.Request)
 }
 
-func (d *Device) Register(name string) *Device {
+func (d *DeviceResp) Register(name string) *DeviceResp {
 	data := url.Values{}
 	data.Set("secret", GetSecret())
 	data.Set("name", name)
@@ -52,7 +52,7 @@ func (d *Device) Register(name string) *Device {
 	return d
 }
 
-func (d *Device) SaveDeviceId() {
+func (d *DeviceResp) SaveDeviceId() {
 	ioutil.WriteFile("device_id.txt", []byte(d.ID), 0644)
 }
 
@@ -62,5 +62,5 @@ func GetDeviceId() string {
 		log.Fatal(err)
 	}
 
-	return string(device_id)
+	return string(deviceID)
 }

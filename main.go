@@ -12,7 +12,7 @@ func main() {
 	ar.Auth(c.Username, c.Password)
 	fmt.Println(ar)
 
-	var d Device
+	var d DeviceResp
 	d.Register("test-device")
 	fmt.Println(d)
 }
