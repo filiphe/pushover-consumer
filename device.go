@@ -9,6 +9,18 @@ import (
 	"net/url"
 )
 
+const (
+	registerUrl = "https://api.pushover.net/1/devices.json"
+)
+
+type Device struct {
+	EncOn                  bool   `json:"encryption_enabled"`
+	DefSound               string `json:"default_sound"`
+	AlwaysDefSound         bool   `json:"always_use_default_sound"`
+	DefHighPrioSound       string `json:"default_high_priority_sound"`
+	AlwaysDefHighPrioSound bool   `json:"always_use_default_high_priority_sound"`
+}
+
 type DeviceResp struct {
 	ID      string `json:"id"`
 	Status  int    `json:"status"`
@@ -25,7 +37,7 @@ func (d *DeviceResp) Register(name string) *DeviceResp {
 	data.Set("name", name)
 	data.Set("os", "O") // os=O is for OpenAPI clients
 
-	resp, err := http.PostForm("https://api.pushover.net/1/devices.json", data)
+	resp, err := http.PostForm(registerUrl, data)
 	if err != nil {
 		log.Fatal(err)
 	}

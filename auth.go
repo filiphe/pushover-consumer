@@ -9,6 +9,10 @@ import (
 	"net/url"
 )
 
+const (
+	loginUrl = "https://api.pushover.net/1/users/login.json"
+)
+
 type AuthResp struct {
 	Status  int    `json:"status"`
 	ID      string `json:"id"`
@@ -25,7 +29,7 @@ func (ar *AuthResp) Auth(username, password string) *AuthResp {
 	data.Set("email", username)
 	data.Set("password", password)
 
-	resp, err := http.PostForm("https://api.pushover.net/1/users/login.json", data)
+	resp, err := http.PostForm(loginUrl, data)
 	if err != nil {
 		log.Fatalf("Unable to login: %+v", err)
 	}
