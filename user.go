@@ -1,9 +1,5 @@
 package main
 
-import (
-	"log"
-)
-
 type User struct {
 	QuietHours bool   `json:"quiet_hours"`
 	IsAndLic   bool   `json:"is_android_licensed"`
