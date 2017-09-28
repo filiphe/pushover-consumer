@@ -1,11 +1,15 @@
 package main
 
 import (
-	"encoding/json"
-	"golang.org/x/net/websocket"
+	"fmt"
 	"log"
 	"net/http"
 	"net/url"
+	"time"
+)
+
+const (
+	latestURL = "https://api.pushover.net/1/devices/%s/update_highest_message.json"
 )
 
 type Message struct {
@@ -21,10 +25,6 @@ type Message struct {
 	Title    string `json:"title"`
 }
 
-type MessageResp struct {
-	Messages []Message `json:"messages"`
-	User     User      `json:"user"`
-	Device   Device    `json:"device"`
-	Status   int       `json:"status"`
-	Request  string    `json:"request"`
+func (m Message) String() string {
+	return fmt.Sprintf("Title: %s\nTime: %s\nMessage: %s\nID: %d\n", m.Title, time.Unix(m.Date, 0), m.Message, m.ID)
 }
