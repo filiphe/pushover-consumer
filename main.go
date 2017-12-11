@@ -1,8 +1,8 @@
 package main
 
-import (
-	"fmt"
-)
+//import (
+//	"fmt"
+//)
 
 func main() {
 	//var c Credentials
@@ -16,9 +16,15 @@ func main() {
 	//d.Register("test-device")
 	//fmt.Println(d)
 
-	var mr MessageResp
-	mr.LookUpMessages()
-	messages := mr.GetMessages()
-	fmt.Println(messages)
+	//var mr MessageResp
+	//mr.LookUpMessages()
+	//messages := mr.GetMessages()
+	//fmt.Println(messages)
+	//length := len(messages)
+	//lastMessage := messages[length-1]
+	//fmt.Println(lastMessage)
+	//lastMessage.SetAsLatest()
 	//messages[len(messages)-1].UpdateToLatest()
+
+	Connect()
 }

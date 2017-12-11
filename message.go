@@ -1,10 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
+	"strconv"
 	"time"
 )
 
@@ -25,6 +28,36 @@ type Message struct {
 	Title    string `json:"title"`
 }
 
+type SetLatestMessageResponse struct {
+	Status  int    `json:"status"`
+	Request string `json:"request"`
+}
+
 func (m Message) String() string {
 	return fmt.Sprintf("Title: %s\nTime: %s\nMessage: %s\nID: %d\n", m.Title, time.Unix(m.Date, 0), m.Message, m.ID)
+}
+
+func (m *Message) SetAsLatest() {
+	data := url.Values{}
+	data.Set("secret", GetSecret())
+	data.Set("message", strconv.Itoa(m.ID))
+
+	requestURL := fmt.Sprintf(latestURL, GetDeviceId())
+
+	fmt.Println(requestURL)
+	fmt.Println(data)
+	resp, err := http.PostForm(requestURL, data)
+	if err != nil {
+		log.Fatalln(resp)
+		log.Fatalf("Unable to send request to set latest message: %+v", err)
+	}
+
+	response := SetLatestMessageResponse{}
+
+	result, _ := ioutil.ReadAll(resp.Body)
+	json.Unmarshal(result, response)
+	// if response.Status != 1 {
+	// 	log.Fatalf("Unable to set message as latest")
+	// }
+	fmt.Println(response)
 }
