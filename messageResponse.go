@@ -12,7 +12,7 @@ const (
 	messagesUrl = "https://api.pushover.net/1/messages.json"
 )
 
-type MessageResp struct {
+type MessageResponse struct {
 	Messages []Message `json:"messages"`
 	User     User      `json:"user"`
 	Device   Device    `json:"device"`
@@ -20,11 +20,11 @@ type MessageResp struct {
 	Request  string    `json:"request"`
 }
 
-func (mr MessageResp) String() string {
+func (mr MessageResponse) String() string {
 	return fmt.Sprintf("Messages: %v\nUser: %v\nDevice: %v\nStatus: %d\nRequest: %s\n", mr.Messages, mr.User, mr.Device, mr.Status, mr.Request)
 }
 
-func (mr *MessageResp) LookUpMessages() *MessageResp {
+func (mr *MessageResponse) LookUpMessages() *MessageResponse {
 	queryURL := fmt.Sprintf("%s?secret=%s&device_id=%s", messagesUrl, GetSecret(), GetDeviceId())
 
 	resp, err := http.Get(queryURL)
@@ -47,6 +47,6 @@ func (mr *MessageResp) LookUpMessages() *MessageResp {
 
 }
 
-func (mr *MessageResp) GetMessages() []Message {
+func (mr *MessageResponse) GetMessages() []Message {
 	return mr.Messages
 }
